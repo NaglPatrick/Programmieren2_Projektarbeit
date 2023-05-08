@@ -19,7 +19,7 @@ public class Register extends JFrame{
 
 
     public Register() {
-        initialize();
+//        initialize();
     }
 
     public void initialize() {
