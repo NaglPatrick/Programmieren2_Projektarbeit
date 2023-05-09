@@ -1,13 +1,12 @@
 /*
  * ISchedule
- * Program to let Professors(Admin), assistants and student schedule their preferred courses
+ * Program to let Professors(com.Classes.Admin), assistants and student schedule their preferred courses
  * Author: Nagl Patrick
  * Last Change:  05.05.2022
  */
 
 
-import GUI.Login;
-import GUI.Register;
+import com.GUI.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +17,7 @@ public class Application extends JFrame {
             @Override
             public void run() {
                 try {
-                    Register registration = new Register();
+//                    Register registration = new Register();
 //                    registration.initialize();
                     Login login = new Login();
                 } catch (Exception e) {

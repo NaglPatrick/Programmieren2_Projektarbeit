@@ -2,7 +2,7 @@
 
 ## Description
 
-This project is an easy Scheduler for Professors(Admin), Assistants and Students. 
+This project is an easy Scheduler for Professors(com.Classes.Admin), Assistants and Students. 
 
 ## Specifications
 
