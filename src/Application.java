@@ -18,8 +18,6 @@ public class Application {
             @Override
             public void run() {
                 try {
-//                    Register registration = new Register();
-//                    registration.initialize();
                     Login login = new Login();
                 } catch (Exception e) {
                     e.printStackTrace();

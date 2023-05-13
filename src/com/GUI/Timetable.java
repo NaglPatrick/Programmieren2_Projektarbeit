@@ -23,12 +23,6 @@ public class Timetable extends JFrame{
 
     public Timetable() {
 
-        setTitle("Timetable");
-
-        setSize(300,300);
-
-        setDefaultCloseOperation (EXIT_ON_CLOSE);
-
         topPanel = new JPanel();
 
         topPanel.setLayout(new BorderLayout());
@@ -75,6 +69,14 @@ public class Timetable extends JFrame{
         });
     }
 
+    public void initialize() {
+
+        setVisible(true);
+        setTitle("Timetable");
+        setSize(300,300);
+        setDefaultCloseOperation (EXIT_ON_CLOSE);
+    }
+
     public class myTableModel extends DefaultTableModel
 
     {
@@ -103,7 +105,7 @@ public class Timetable extends JFrame{
 
         Timetable x=new Timetable();
 
-        x.setVisible(true);
+        x.initialize();
 
     }
 

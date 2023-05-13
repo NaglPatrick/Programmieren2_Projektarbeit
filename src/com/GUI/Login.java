@@ -17,8 +17,6 @@ public class Login extends JFrame{
         buttonCreate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                Register register = new Register();
-//                register.initialize();
                 EventQueue.invokeLater(new Runnable() {
                     @Override
                     public void run() {
@@ -36,6 +34,7 @@ public class Login extends JFrame{
         buttonLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
 //                Menu menu = new Menu();
 //                menu.initialize();
                 EventQueue.invokeLater(new Runnable() {
