@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 import com.Classes.*;
 
 
+
 public class Register extends JFrame{
 
     private JPanel mainPanel;
@@ -25,13 +26,15 @@ public class Register extends JFrame{
     private JButton buttonCreate;
 
     //different lists for different kinds of users
-    private ArrayList<Student> studList = new ArrayList<Student>();
+//    private ArrayList<Student> studList = new ArrayList<Student>();
+    private ArrayList<Admin> adminList = new ArrayList<Admin>();
+
     private Pattern eMail = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
 
     //getter
-    public ArrayList<Student> getStudList() {
-        return studList;
-    }
+//    public ArrayList<Student> getStudList() {
+//        return studList;
+//    }
 
     //Constructor
     public Register() {
@@ -49,16 +52,24 @@ public class Register extends JFrame{
                 Matcher mat = eMail.matcher(mail);
                 if (mat.matches()) {
                     // insert switch case for stud, assi, or admin
-                    Student student = new Student(userName, mail, pw);
+//                    Student student = new Student(userName, mail, pw);
+                    Admin admin = new Admin(userName, mail, pw);
 
                     //check username exists?
-                    if (!containsName(studList, student.getUserName())) {
+                    if (!containsName(adminList, admin.getUserName())) {
                         //check email exists?
-                        if (!containsEMail(studList, student.geteMail())) {
+                        if (!containsEMail(adminList, admin.geteMail())) {
                             //check length of list
 
-//                                studList.add(student);
-                                //clear input fields (optional??)
+                                adminList.add(admin);
+                            for (Admin user : adminList) {
+                                System.out.println(user.getUserName());
+                            }
+                                System.out.println();
+                                setVisible(false);
+                                dispose();
+
+                            //clear input fields (optional??)
 //                                textFieldUser.setText("");
 //                                textFieldMail.setText("");
 //                                passwordField.setText("");
@@ -78,12 +89,12 @@ public class Register extends JFrame{
         });
     }
 
-    public boolean containsName(ArrayList<Student> userList, String userName) {
-        return userList.stream().map(Student::getUserName).filter(userName::equals).findFirst().isPresent();
+    public boolean containsName(ArrayList<Admin> userList, String userName) {
+        return userList.stream().map(Admin::getUserName).filter(userName::equals).findFirst().isPresent();
     }
 
-    public boolean containsEMail(ArrayList<Student> userList, String eMail) {
-        return userList.stream().map(Student::geteMail).filter(eMail::equals).findFirst().isPresent();
+    public boolean containsEMail(ArrayList<Admin> userList, String eMail) {
+        return userList.stream().map(Admin::geteMail).filter(eMail::equals).findFirst().isPresent();
     }
 
     public void initialize() {
