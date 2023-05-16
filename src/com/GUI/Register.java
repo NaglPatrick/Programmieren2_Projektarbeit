@@ -1,7 +1,7 @@
 package com.GUI;
 /*
  * ISchedule
- * Program to let Professors(com.Classes.Admin), assistants and student schedule their preferred courses
+ * Program to let Professors(Admin), assistants and student schedule their preferred courses
  * Author: Nagl Patrick
  * Last Change:  05.05.2022
  */
@@ -73,6 +73,7 @@ public class Register extends JFrame{
                                 }
                             }
 
+                            //just for testing
                             for (Admin user : adminList) {
                                 System.out.println("Admin: " + user.getUserName());
                             }
@@ -82,13 +83,10 @@ public class Register extends JFrame{
                             for (Student user : studList) {
                                 System.out.println("Student: " + user.getUserName());
                             }
-                                setVisible(false);
+//                                setVisible(false);
 //                                dispose();
 
-                            //clear input fields (optional??)
-//                                textFieldUser.setText("");
-//                                textFieldMail.setText("");
-//                                passwordField.setText("");
+
 
 
                         } else {

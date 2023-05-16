@@ -35,13 +35,11 @@ public class Login extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-//                Menu menu = new Menu();
-//                menu.initialize();
                 EventQueue.invokeLater(new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            Menu menu = new Menu();
+                            MenuAdmin menu = new MenuAdmin();
                             menu.initialize();
                         } catch (Exception e) {
                             e.printStackTrace();
