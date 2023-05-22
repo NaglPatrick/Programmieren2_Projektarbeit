@@ -1,19 +1,17 @@
-/*
- * ISchedule
- * Program to let Professors(com.Classes.Admin), assistants and student schedule their preferred courses
- * Author: Nagl Patrick
- * Last Change:  13.05.2022
- */
+package com.Main;
 
-
+import com.Classes.Admin;
 import com.GUI.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Application {
 
 
+
     public static void main(String[] args) {
+        Lists lists = new Lists();
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
