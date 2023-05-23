@@ -7,4 +7,16 @@ package com.Classes;
  */
 
 public class Room {
+
+    private String roomName;
+
+    //constructor
+    public Room(String roomName) {
+        this.roomName = roomName;
+    }
+
+   //getter
+    public String getRoomName() {
+        return roomName;
+    }
 }
