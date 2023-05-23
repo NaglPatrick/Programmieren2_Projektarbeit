@@ -61,7 +61,7 @@ public class Login extends JFrame{
                             @Override
                             public void run() {
                                 try {
-                                    MenuAdmin menu = new MenuAdmin();
+                                    MenuAdmin menu = new MenuAdmin(admin);
                                     menu.initialize();
                                     //close Login window
                                     setVisible(false);
@@ -76,8 +76,27 @@ public class Login extends JFrame{
 
                     }
                 } else if (assiList.containsKey(userName)) {
-                    JOptionPane.showMessageDialog(null, "NOT YET AVAILABLE", "Login Warning", JOptionPane.INFORMATION_MESSAGE);
-                } else if (studList.containsKey(userName)) {
+                    Assistant assi = assiList.get(userName);
+                    System.out.println(assi.getUserName() + " " + assi.geteMail() + " " + assi.getPassword());
+                    if (Objects.equals(pw, assi.getPassword())) {
+                        EventQueue.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    MenuAssistant menu = new MenuAssistant(assi);
+                                    menu.initialize();
+                                    //close Login window
+                                    setVisible(false);
+                                    dispose();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Wrong password, try again", "Login Warning", JOptionPane.INFORMATION_MESSAGE);
+
+                    }                } else if (studList.containsKey(userName)) {
                     JOptionPane.showMessageDialog(null, "NOT YET AVAILABLE", "Login Warning", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(null, "User does not exist", "Login Warning", JOptionPane.INFORMATION_MESSAGE);

@@ -90,14 +90,6 @@
           <text value="Create"/>
         </properties>
       </component>
-      <component id="c7630" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="6" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Main Menu"/>
-        </properties>
-      </component>
       <component id="7d849" class="javax.swing.JLabel">
         <constraints>
           <grid row="9" column="0" row-span="1" col-span="6" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
@@ -189,6 +181,22 @@
           <grid row="3" column="4" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
+      </component>
+      <component id="86993" class="javax.swing.JLabel" binding="userNameLabel" custom-create="true">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="spaceholder"/>
+        </properties>
+      </component>
+      <component id="c7630" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Main Menu"/>
+        </properties>
       </component>
     </children>
   </grid>

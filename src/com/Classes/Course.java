@@ -10,17 +10,33 @@ public class Course {
     private Time timeEnd;
     private String weekday;
     private  Room room;
+    private Admin lector;
+    private Assistant lector2;
 
     //constructors
     public Course(String courseName) {
         this.courseName = courseName;
     }
-    public Course(String courseName, Room room, Time timeStart, Time timeEnd, String weekday) {
+    public Course(String courseName, Room room, Time timeStart, Time timeEnd, String weekday, Admin lector) {
         this.courseName = courseName;
         this.room = room;
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
         this.weekday = weekday;
+        this.lector = lector;
+        room.setEmpty();
+        room.addCourseList(this);
+    }
+
+    public Course(String courseName, Room room, Time timeStart, Time timeEnd, String weekday, Assistant lector2) {
+        this.courseName = courseName;
+        this.room = room;
+        this.timeStart = timeStart;
+        this.timeEnd = timeEnd;
+        this.weekday = weekday;
+        this.lector2 = lector2;
+        room.setEmpty();
+        room.addCourseList(this);
     }
 
     //setter

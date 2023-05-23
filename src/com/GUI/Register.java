@@ -67,19 +67,19 @@ public class Register extends JFrame{
                                     case 0: {
                                         Admin admin = new Admin(userName, mail, pw);
 //                                    adminList.add(admin);
-                                        com.Main.Lists.setAdminList(admin);
+                                        com.Main.Lists.addAdminList(admin);
                                         break;
                                     }
                                     case 1: {
                                         Assistant assi = new Assistant(userName, mail, pw);
 //                                    assiList.add(assi);
-                                        com.Main.Lists.setAssiList(assi);
+                                        com.Main.Lists.addAssiList(assi);
                                         break;
                                     }
                                     case 2: {
                                         Student stud = new Student(userName, mail, pw);
 //                                    studList.add(stud);
-                                        com.Main.Lists.setStudList(stud);
+                                        com.Main.Lists.addStudList(stud);
 
                                     }
                                 }

@@ -28,23 +28,23 @@ public class Lists {
         initialize();
     }
 
-    //setter
-    public static void setAdminList(Admin admin) {
+    //add to methods/setter
+    public static void addAdminList(Admin admin) {
         adminList.put(admin.getUserName(), admin);
     }
 
-    public static void setAssiList(Assistant assi) {
+    public static void addAssiList(Assistant assi) {
         assiList.put(assi.getUserName(), assi);
     }
 
-    public static void setStudList(Student stud) {
+    public static void addStudList(Student stud) {
         studList.put(stud.getUserName(), stud);
     }
 
-    public static void setRoomList(Room room) {
+    public static void addRoomList(Room room) {
         roomList.put(room.getRoomName(), room);
     }
-    public static void setCourseList(Course course) {
+    public static void addCourseList(Course course) {
         courseList.put(course.getCourseName(), course);
     }
 
@@ -73,17 +73,17 @@ public class Lists {
     private void initialize() {
         //admins
         Admin admin1 = new Admin("Master", "master@gmx.at", "4321" );
-        setAdminList(admin1);
+        addAdminList(admin1);
 
         //Assis
         Assistant assi1 = new Assistant("Dominik", "dom@gmx.at", "1234");
         Assistant assi2 = new Assistant("Matze", "mathias@gmail.com", "password");
-        setAssiList(assi1);
-        setAssiList(assi2);
+        addAssiList(assi1);
+        addAssiList(assi2);
 
         //Students
         Student stud1 = new Student("Vilja", "vilja@web.de", "password");
-        setStudList(stud1);
+        addStudList(stud1);
 
         //rooms
         Room room1 = new Room("Room 101");
@@ -91,21 +91,21 @@ public class Lists {
         Room room3 = new Room("Room 103");
         Room room4 = new Room("Room 202");
         Room room5 = new Room("Room 204");
-        setRoomList(room1);
-        setRoomList(room2);
-        setRoomList(room3);
-        setRoomList(room4);
-        setRoomList(room5);
+        addRoomList(room1);
+        addRoomList(room2);
+        addRoomList(room3);
+        addRoomList(room4);
+        addRoomList(room5);
 
         //courses
-        Course course1 = new Course("Mathe", room1, Time.valueOf(Application.correctTime("8:00")), Time.valueOf(Application.correctTime("11:30")), "Monday");
-        Course course2 = new Course("Mathe", room1, Time.valueOf(Application.correctTime("8:00")), Time.valueOf(Application.correctTime("11:30")), "Tuesday");
-        Course course3 = new Course("English", room2, Time.valueOf(Application.correctTime("12:00")), Time.valueOf(Application.correctTime("13:30")), "Monday");
-        Course course4 = new Course("English", room2, Time.valueOf(Application.correctTime("12:00")), Time.valueOf(Application.correctTime("13:30")), "Tuesday");
-        setCourseList(course1);
-        setCourseList(course2);
-        setCourseList(course3);
-        setCourseList(course4);
+        Course course1 = new Course("Mathe", room1, Time.valueOf(Application.correctTime("8:00")), Time.valueOf(Application.correctTime("11:30")), "Monday", admin1);
+        Course course2 = new Course("Mathe", room1, Time.valueOf(Application.correctTime("8:00")), Time.valueOf(Application.correctTime("11:30")), "Tuesday", admin1);
+        Course course3 = new Course("English", room2, Time.valueOf(Application.correctTime("12:00")), Time.valueOf(Application.correctTime("13:30")), "Monday", assi1);
+        Course course4 = new Course("English", room2, Time.valueOf(Application.correctTime("12:00")), Time.valueOf(Application.correctTime("13:30")), "Tuesday", assi2);
+        addCourseList(course1);
+        addCourseList(course2);
+        addCourseList(course3);
+        addCourseList(course4);
     }
 
 

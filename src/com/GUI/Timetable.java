@@ -22,15 +22,13 @@ public class Timetable extends JFrame{
 
 
     public Timetable() {
+        initialize();
 
         topPanel = new JPanel();
-
         topPanel.setLayout(new BorderLayout());
-
         getContentPane().add(topPanel);
 
         columnNames = new String[] {"Time", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
-
         dataValues = new String[][] {
                 {"8:00"},
                 {"8:30"},

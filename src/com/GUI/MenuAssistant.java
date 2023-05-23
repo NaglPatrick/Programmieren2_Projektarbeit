@@ -1,6 +1,7 @@
 package com.GUI;
 
 import com.Classes.Admin;
+import com.Classes.Assistant;
 import com.Classes.Course;
 import com.Classes.Room;
 import com.Main.Application;
@@ -14,23 +15,19 @@ import java.util.Map;
 
 import com.Main.Lists;
 
-public class MenuAdmin extends JFrame{
+public class MenuAssistant extends JFrame{
     private JPanel mainPanel;
     private JComboBox comboBoxTimeStart;
     private JComboBox comboBoxTimeEnd;
     private JComboBox comboBoxRoom;
-    private JTextField textFieldRoom;
-    private JButton createRoomButton;
     private JButton acceptButton;
     private JButton logoutButton;
-    private JTextField textFieldCourse;
-    private JButton createCourseButton;
     private JComboBox comboBoxDay;
     private JComboBox comboBoxCourse;
     private JLabel userNameLabel;
 
     //variables and such
-    private Admin user;
+    private Assistant user;
     private String temp;
 
     private Map<String, Room> roomList;
@@ -38,35 +35,11 @@ public class MenuAdmin extends JFrame{
 
 
 
-    public MenuAdmin(Admin user) {
+    public MenuAssistant(Assistant user) {
         this.user = user;
         this.roomList = Lists.getRoomList();
         this.courseList = Lists.getCourseList();
 
-
-        createRoomButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                temp = textFieldRoom.getText();
-                comboBoxRoom.addItem(temp);
-                System.out.println(temp);
-                //Todo: Save temp in database
-                Room room = new Room(temp);
-                Lists.addRoomList(room);
-            }
-        });
-
-        createCourseButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                temp = textFieldCourse.getText();
-                comboBoxCourse.addItem(temp);
-                System.out.println(temp);
-                //Todo: Save temp in database
-                Course course = new Course(temp);
-                Lists.addCourseList(course);
-            }
-        });
 
         acceptButton.addActionListener(new ActionListener() {
             @Override
