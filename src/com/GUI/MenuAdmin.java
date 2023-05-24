@@ -13,6 +13,7 @@ import java.sql.Time;
 import java.util.Map;
 
 import com.Main.Lists;
+import com.Classes.User;
 
 public class MenuAdmin extends JFrame{
     private JPanel mainPanel;
@@ -30,7 +31,7 @@ public class MenuAdmin extends JFrame{
     private JLabel userNameLabel;
 
     //variables and such
-    private Admin user;
+    private User user;
     private String temp;
 
     private Map<String, Room> roomList;
@@ -38,7 +39,7 @@ public class MenuAdmin extends JFrame{
 
 
 
-    public MenuAdmin(Admin user) {
+    public MenuAdmin(User user) {
         this.user = user;
         this.roomList = Lists.getRoomList();
         this.courseList = Lists.getCourseList();

@@ -6,6 +6,8 @@ import com.Classes.Course;
 import com.Classes.Room;
 import com.Main.Application;
 
+import com.Classes.User;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -27,7 +29,7 @@ public class MenuAssistant extends JFrame{
     private JLabel userNameLabel;
 
     //variables and such
-    private Assistant user;
+    private User user;
     private String temp;
 
     private Map<String, Room> roomList;
@@ -35,7 +37,7 @@ public class MenuAssistant extends JFrame{
 
 
 
-    public MenuAssistant(Assistant user) {
+    public MenuAssistant(User user) {
         this.user = user;
         this.roomList = Lists.getRoomList();
         this.courseList = Lists.getCourseList();

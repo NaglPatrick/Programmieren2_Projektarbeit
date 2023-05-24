@@ -1,10 +1,6 @@
 package com.Main;
 
-import com.Classes.Admin;
-import com.Classes.Assistant;
-import com.Classes.Student;
-import com.Classes.Room;
-import com.Classes.Course;
+import com.Classes.*;
 
 
 import java.sql.Time;
@@ -13,6 +9,7 @@ import java.util.Map;
 
 public class Lists {
 
+    private static Map<String, User> userList;
     private static Map<String, Admin> adminList;
     private static Map<String, Assistant> assiList;
     private static Map<String, Student> studList;
@@ -20,6 +17,7 @@ public class Lists {
     private static Map<String, Course> courseList;
 
     public Lists() {
+        this.userList = new HashMap<String, User>();
         this.adminList = new HashMap<String, Admin>();
         this.assiList = new HashMap<String, Assistant>();
         this.studList = new HashMap<String, Student>();
@@ -29,6 +27,10 @@ public class Lists {
     }
 
     //add to methods/setter
+    public static void addUserList(User user) {
+        userList.put(user.getUserName(), user);
+    }
+
     public static void addAdminList(Admin admin) {
         adminList.put(admin.getUserName(), admin);
     }
@@ -49,6 +51,11 @@ public class Lists {
     }
 
     //getter
+
+    public static Map<String, User> getUserList() {
+        return userList;
+    }
+
     public static Map<String, Admin> getAdminList() {
         return adminList;
     }
@@ -72,18 +79,18 @@ public class Lists {
     //initialize some basic inputs for lists
     private void initialize() {
         //admins
-        Admin admin1 = new Admin("Master", "master@gmx.at", "4321" );
-        addAdminList(admin1);
+        User admin1 = new User("Master", "master@gmx.at", "4321", "Admin");
+        addUserList(admin1);
 
         //Assis
-        Assistant assi1 = new Assistant("Dominik", "dom@gmx.at", "1234");
-        Assistant assi2 = new Assistant("Matze", "mathias@gmail.com", "password");
-        addAssiList(assi1);
-        addAssiList(assi2);
+        User assi1 = new User("Dominik", "dom@gmx.at", "1234", "Assistant");
+        User assi2 = new User("Matze", "mathias@gmail.com", "password", "Assistant");
+        addUserList(assi1);
+        addUserList(assi2);
 
         //Students
-        Student stud1 = new Student("Vilja", "vilja@web.de", "password");
-        addStudList(stud1);
+        User stud1 = new User("Vilja", "vilja@web.de", "password", "Student");
+        addUserList(stud1);
 
         //rooms
         Room room1 = new Room("Room 101");

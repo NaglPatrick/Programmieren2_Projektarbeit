@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import com.Classes.*;
+import com.Main.Lists;
 
 
 
@@ -28,6 +29,7 @@ public class Register extends JFrame{
 
 
     //different lists for different kinds of users
+    private Map<String, User> userList;
     private Map<String, Admin> adminList;
     private Map<String, Student> studList;
     private Map<String, Assistant> assiList;
@@ -42,6 +44,7 @@ public class Register extends JFrame{
         adminList = com.Main.Lists.getAdminList();
         assiList = com.Main.Lists.getAssiList();
         studList = com.Main.Lists.getStudList();
+        userList = Lists.getUserList();
 
         //ActionListener for button "create User"
 
@@ -51,7 +54,7 @@ public class Register extends JFrame{
                 String userName = userNameField.getText();
                 String mail = eMailField.getText();
                 String pw = passwordField.getText();
-                int role = comboBox.getSelectedIndex();
+                String role = comboBox.getSelectedItem().toString();
 
                 //check is-E-Mail?
                 Matcher mat = eMail.matcher(mail);
@@ -62,38 +65,23 @@ public class Register extends JFrame{
                         if (!adminList.containsValue(mail) && !assiList.containsValue(mail) && !studList.containsValue(mail)) {
                             //password not empty (can be changed to pw not save etc.)
                             if (pw != "") {
-                                //check which role was picked (Default Student)
-                                switch (role) {
-                                    case 0: {
-                                        Admin admin = new Admin(userName, mail, pw);
-//                                    adminList.add(admin);
-                                        com.Main.Lists.addAdminList(admin);
-                                        break;
-                                    }
-                                    case 1: {
-                                        Assistant assi = new Assistant(userName, mail, pw);
-//                                    assiList.add(assi);
-                                        com.Main.Lists.addAssiList(assi);
-                                        break;
-                                    }
-                                    case 2: {
-                                        Student stud = new Student(userName, mail, pw);
-//                                    studList.add(stud);
-                                        com.Main.Lists.addStudList(stud);
+                                        User user = new User(userName, mail, pw, role);
+                                        Lists.addUserList(user);
 
-                                    }
-                                }
 
                                 //just for testing
-                                for (Admin user : adminList.values()) {
-                                    System.out.println("Admin: name: " + user.getUserName() + ", mail: " + user.geteMail() + ", pw: " + user.getPassword());
+                                for (User user1 : userList.values()) {
+                                    System.out.println(user.getRole() + ": name: " + user.getUserName() + ", mail: " + user.geteMail() + ", pw: " + user.getPassword());
                                 }
-                                for (Assistant user : assiList.values()) {
-                                    System.out.println("Assistant:  name: " + user.getUserName() + ", mail: " + user.geteMail() + ", pw: " + user.getPassword());
-                                }
-                                for (Student user : studList.values()) {
-                                    System.out.println("Student:  name: " + user.getUserName() + ", mail: " + user.geteMail() + ", pw: " + user.getPassword());
-                                }
+//                                for (Admin admin : adminList.values()) {
+//                                    System.out.println("Admin: name: " + user.getUserName() + ", mail: " + user.geteMail() + ", pw: " + user.getPassword());
+//                                }
+//                                for (Assistant assi : assiList.values()) {
+//                                    System.out.println("Assistant:  name: " + user.getUserName() + ", mail: " + user.geteMail() + ", pw: " + user.getPassword());
+//                                }
+//                                for (Student stud : studList.values()) {
+//                                    System.out.println("Student:  name: " + user.getUserName() + ", mail: " + user.geteMail() + ", pw: " + user.getPassword());
+//                                }
                                 setVisible(false);
                                 dispose();
 
