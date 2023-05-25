@@ -48,6 +48,7 @@ public class MenuAssistant extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 //input
                 String roomName = comboBoxRoom.getSelectedItem().toString();
+                String courseName = comboBoxCourse.getSelectedItem().toString();
                 String timeStartString = comboBoxTimeStart.getSelectedItem().toString();
                 Time timeStart = Time.valueOf(com.Main.Application.correctTime(timeStartString));
                 String timeEndString = comboBoxTimeEnd.getSelectedItem().toString();
@@ -56,46 +57,60 @@ public class MenuAssistant extends JFrame{
 
                 //from list
                 Room room = roomList.get(roomName);
+                Course course1 = courseList.get(courseName);
+                System.out.println(room.getRoomName() + room.getCourseList());
+                System.out.println(user.getUserName() + user.getCourseList());
+                System.out.println(course1.getCourseName() + course1.getCourseList());
 
                 if (timeStart.before(timeEnd)) {
-                    if (room.isEmpty()) {
-                        openTimetable();
-                    } else {
-                        Map<String, Course> roomCourseList = room.getCourseList();
-                        boolean hasTime = true;
-                        for (Course course : roomCourseList.values()) {
+//                    if (room.isEmpty()) {
+//                        checkCourses(lector,timeStart, timeEnd);
+//                    } else {
+                    Map<String, Course> roomCourseList = room.getCourseList();
+                    boolean hasTime = true;
+                    for (Course course : roomCourseList.values()) {
+                        if (isTimeWithinRange(course.getTimeStart(), course.getTimeEnd(), timeStart, timeEnd)) {
+                            hasTime = false;
+                            break;
+                        }
+                    }
+                    if (hasTime) {
+//                            checkCourses(lector, timeStart, timeEnd);
+                        Map<String, Course> userCourseList = user.getCourseList();
+                        boolean hasTime2 = true;
+                        for (Course course : userCourseList.values()) {
                             if (isTimeWithinRange(course.getTimeStart(), course.getTimeEnd(), timeStart, timeEnd)) {
-                                hasTime = false;
+                                hasTime2 = false;
                                 break;
                             }
                         }
-                        if (hasTime) {
-                            if (!courseList.containsValue(user)) {
-                                System.out.println("ERROR!!");
+                        if (hasTime2) {
+                          Map<String, Course> courseCourseList = course1.getCourseList();
+                                    boolean hasTime3 = true;
+                                    for (Course course : courseCourseList.values()) {
+                                        if (isTimeWithinRange(course.getTimeStart(), course.getTimeEnd(), timeStart, timeEnd)) {
+                                            hasTime3 = false;
+                                            break;
+                                }
+                            }
+                            if (hasTime3) {
                                 openTimetable();
+
                             } else {
-                                boolean hasTime2 = true;
-                                for (Course course : courseList.values()) {
-                                    if (isTimeWithinRange(course.getTimeStart(), course.getTimeEnd(), timeStart, timeEnd)) {
-                                        hasTime2 = false;
-                                        break;
-                                    }
-                                }
-                                if (hasTime2) {
-                                    openTimetable();
-                                } else {
-                                    JOptionPane.showMessageDialog(null, "There is already a course you attend at that time", "Collision Warning", JOptionPane.INFORMATION_MESSAGE);
-                                    openTimetable();
-                                }
+                                JOptionPane.showMessageDialog(null, "There is already the same course in another room at that time", "Collision Warning", JOptionPane.INFORMATION_MESSAGE);
 
                             }
-
                         } else {
-                            JOptionPane.showMessageDialog(null, "There is already a course in this room", "Collision Error", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "There is already a course you attend at that time", "Collision Warning", JOptionPane.INFORMATION_MESSAGE);
 
                         }
 
+                    } else {
+                        JOptionPane.showMessageDialog(null, "There is already a course in this room", "Collision Error", JOptionPane.INFORMATION_MESSAGE);
+
                     }
+
+//                    }
                 } else {
                     JOptionPane.showMessageDialog(null, "Start time cannot be after end time!", "Time Error", JOptionPane.INFORMATION_MESSAGE);
 

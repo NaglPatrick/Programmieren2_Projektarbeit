@@ -31,9 +31,9 @@ public class Login extends JFrame{
     public Login() {
         initialize();
         userList = Lists.getUserList();
-        adminList = com.Main.Lists.getAdminList();
-        assiList = com.Main.Lists.getAssiList();
-        studList = com.Main.Lists.getStudList();
+//        adminList = com.Main.Lists.getAdminList();
+//        assiList = com.Main.Lists.getAssiList();
+//        studList = com.Main.Lists.getStudList();
         buttonCreate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

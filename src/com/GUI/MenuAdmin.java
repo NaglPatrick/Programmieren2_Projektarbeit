@@ -36,6 +36,8 @@ public class MenuAdmin extends JFrame{
 
     private Map<String, Room> roomList;
     private Map<String, Course> courseList;
+    private Map<String, User> userList;
+
 
 
 
@@ -43,6 +45,7 @@ public class MenuAdmin extends JFrame{
         this.user = user;
         this.roomList = Lists.getRoomList();
         this.courseList = Lists.getCourseList();
+        this.userList = Lists.getUserList();
 
 
         createRoomButton.addActionListener(new ActionListener() {
@@ -74,6 +77,7 @@ public class MenuAdmin extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 //input
                 String roomName = comboBoxRoom.getSelectedItem().toString();
+                String courseName = comboBoxCourse.getSelectedItem().toString();
                 String timeStartString = comboBoxTimeStart.getSelectedItem().toString();
                 Time timeStart = Time.valueOf(com.Main.Application.correctTime(timeStartString));
                 String timeEndString = comboBoxTimeEnd.getSelectedItem().toString();
@@ -82,11 +86,15 @@ public class MenuAdmin extends JFrame{
 
                 //from list
                 Room room = roomList.get(roomName);
+                Course course1 = courseList.get(courseName);
+                System.out.println(room.getRoomName() + room.getCourseList());
+                System.out.println(user.getUserName() + user.getCourseList());
+                System.out.println(course1.getCourseName() + course1.getCourseList());
 
                 if (timeStart.before(timeEnd)) {
-                    if (room.isEmpty()) {
-                        openTimetable();
-                    } else {
+//                    if (room.isEmpty()) {
+//                        checkCourses(lector,timeStart, timeEnd);
+//                    } else {
                         Map<String, Course> roomCourseList = room.getCourseList();
                         boolean hasTime = true;
                         for (Course course : roomCourseList.values()) {
@@ -96,23 +104,33 @@ public class MenuAdmin extends JFrame{
                             }
                         }
                         if (hasTime) {
-                            if (!courseList.containsValue(user)) {
-                                System.out.println("ERROR!!");
-                                openTimetable();
-                            } else {
-                                boolean hasTime2 = true;
-                                for (Course course : courseList.values()) {
-                                    if (isTimeWithinRange(course.getTimeStart(), course.getTimeEnd(), timeStart, timeEnd)) {
-                                        hasTime2 = false;
-                                        break;
+//                            checkCourses(lector, timeStart, timeEnd);
+                            Map<String, Course> userCourseList = user.getCourseList();
+                            boolean hasTime2 = true;
+                            for (Course course : userCourseList.values()) {
+                                if (isTimeWithinRange(course.getTimeStart(), course.getTimeEnd(), timeStart, timeEnd)) {
+                                    hasTime2 = false;
+                                    break;
+                                }
+                            }
+                            if (hasTime2) {
+                                    Map<String, Course> courseCourseList = course1.getCourseList();
+                                    boolean hasTime3 = true;
+                                    for (Course course : courseCourseList.values()) {
+                                        if (isTimeWithinRange(course.getTimeStart(), course.getTimeEnd(), timeStart, timeEnd)) {
+                                            hasTime3 = false;
+                                            break;
+                                        }
                                     }
-                                }
-                                if (hasTime2) {
-                                    openTimetable();
-                                } else {
-                                    JOptionPane.showMessageDialog(null, "There is already a course you attend at that time", "Collision Warning", JOptionPane.INFORMATION_MESSAGE);
-                                    openTimetable();
-                                }
+                                    if (hasTime3) {
+                                        openTimetable();
+
+                                    } else {
+                                        JOptionPane.showMessageDialog(null, "There is already the same course in another room at that time", "Collision Warning", JOptionPane.INFORMATION_MESSAGE);
+
+                                    }
+                            } else {
+                                JOptionPane.showMessageDialog(null, "There is already a course you attend at that time", "Collision Warning", JOptionPane.INFORMATION_MESSAGE);
 
                             }
 
@@ -121,7 +139,7 @@ public class MenuAdmin extends JFrame{
 
                         }
 
-                    }
+//                    }
                 } else {
                     JOptionPane.showMessageDialog(null, "Start time cannot be after end time!", "Time Error", JOptionPane.INFORMATION_MESSAGE);
 
@@ -210,6 +228,28 @@ public class MenuAdmin extends JFrame{
     }
 
 
+    public void checkCourses(User lector, Time timeStart, Time timeEnd) {
+
+            Map<String, Course> userCourseList = lector.getCourseList();
+            if (!userCourseList.isEmpty())
+                System.out.println("other courses exist for user");
+            boolean hasTime2 = true;
+            for (Course course : userCourseList.values()) {
+                if (isTimeWithinRange(course.getTimeStart(), course.getTimeEnd(), timeStart, timeEnd)) {
+                    hasTime2 = false;
+                    break;
+                }
+            }
+            if (hasTime2) {
+                System.out.println("no collision");
+                openTimetable();
+            } else {
+                System.out.println("collision");
+                JOptionPane.showMessageDialog(null, "There is already a course you attend at that time", "Collision Warning", JOptionPane.INFORMATION_MESSAGE);
+                openTimetable();
+            }
+
+        }
 
     private static void openTimetable() {
         EventQueue.invokeLater(new Runnable() {

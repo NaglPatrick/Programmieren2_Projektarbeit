@@ -2,6 +2,7 @@ package com.Classes;
 
 import java.sql.Time;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Course {
@@ -12,7 +13,7 @@ public class Course {
     private String weekday;
     private  Room room;
     private User user;
-    private Map<String, User> attendants;
+    private Map<String, Course> courseList;
 
 
     //constructors
@@ -26,8 +27,13 @@ public class Course {
         this.timeEnd = timeEnd;
         this.weekday = weekday;
         this.user = user;
+        this.courseList = new HashMap<String, Course>();
         room.setEmpty();
         room.addCourseList(this);
+        user.addCourseList(this);
+        this.addCourseList(this);
+
+
     }
 
 
@@ -49,8 +55,8 @@ public class Course {
         this.weekday = day;
     }
 
-    public void setAttendants(Map<String, User> attendants) {
-        this.attendants = attendants;
+    public void addCourseList(Course course) {
+        courseList.put(course.getCourseName(), course);
     }
 
     //getter
@@ -70,7 +76,11 @@ public class Course {
         return weekday;
     }
 
-    public Map<String, User> getAttendants() {
-        return attendants;
+    public User getUser() {
+        return user;
+    }
+
+    public Map<String, Course> getCourseList() {
+        return courseList;
     }
 }

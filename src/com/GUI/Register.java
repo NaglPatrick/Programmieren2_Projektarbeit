@@ -41,9 +41,9 @@ public class Register extends JFrame{
     //Constructor
     public Register() {
 //        initialize();
-        adminList = com.Main.Lists.getAdminList();
-        assiList = com.Main.Lists.getAssiList();
-        studList = com.Main.Lists.getStudList();
+//        adminList = com.Main.Lists.getAdminList();
+//        assiList = com.Main.Lists.getAssiList();
+//        studList = com.Main.Lists.getStudList();
         userList = Lists.getUserList();
 
         //ActionListener for button "create User"

@@ -95,7 +95,7 @@ public class Timetable extends JFrame{
         setVisible(true);
         setTitle("Timetable");
         setSize(300,300);
-        setDefaultCloseOperation (EXIT_ON_CLOSE);
+//        setDefaultCloseOperation (EXIT_ON_CLOSE);
     }
 
     public class myTableModel extends DefaultTableModel

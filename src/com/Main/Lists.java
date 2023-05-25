@@ -10,17 +10,17 @@ import java.util.Map;
 public class Lists {
 
     private static Map<String, User> userList;
-    private static Map<String, Admin> adminList;
-    private static Map<String, Assistant> assiList;
-    private static Map<String, Student> studList;
+//    private static Map<String, Admin> adminList;
+//    private static Map<String, Assistant> assiList;
+//    private static Map<String, Student> studList;
     private static Map<String, Room> roomList;
     private static Map<String, Course> courseList;
 
     public Lists() {
         this.userList = new HashMap<String, User>();
-        this.adminList = new HashMap<String, Admin>();
-        this.assiList = new HashMap<String, Assistant>();
-        this.studList = new HashMap<String, Student>();
+//        this.adminList = new HashMap<String, Admin>();
+//        this.assiList = new HashMap<String, Assistant>();
+//        this.studList = new HashMap<String, Student>();
         this.roomList = new HashMap<String, Room>();
         this.courseList = new HashMap<String, Course>();
         initialize();
@@ -31,17 +31,17 @@ public class Lists {
         userList.put(user.getUserName(), user);
     }
 
-    public static void addAdminList(Admin admin) {
-        adminList.put(admin.getUserName(), admin);
-    }
-
-    public static void addAssiList(Assistant assi) {
-        assiList.put(assi.getUserName(), assi);
-    }
-
-    public static void addStudList(Student stud) {
-        studList.put(stud.getUserName(), stud);
-    }
+//    public static void addAdminList(Admin admin) {
+//        adminList.put(admin.getUserName(), admin);
+//    }
+//
+//    public static void addAssiList(Assistant assi) {
+//        assiList.put(assi.getUserName(), assi);
+//    }
+//
+//    public static void addStudList(Student stud) {
+//        studList.put(stud.getUserName(), stud);
+//    }
 
     public static void addRoomList(Room room) {
         roomList.put(room.getRoomName(), room);
@@ -56,17 +56,17 @@ public class Lists {
         return userList;
     }
 
-    public static Map<String, Admin> getAdminList() {
-        return adminList;
-    }
-
-    public static Map<String, Assistant> getAssiList() {
-        return assiList;
-    }
-
-    public static Map<String, Student> getStudList() {
-        return studList;
-    }
+//    public static Map<String, Admin> getAdminList() {
+//        return adminList;
+//    }
+//
+//    public static Map<String, Assistant> getAssiList() {
+//        return assiList;
+//    }
+//
+//    public static Map<String, Student> getStudList() {
+//        return studList;
+//    }
 
     public static Map<String, Room> getRoomList() {
         return roomList;
