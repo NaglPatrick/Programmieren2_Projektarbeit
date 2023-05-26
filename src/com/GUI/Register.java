@@ -30,9 +30,9 @@ public class Register extends JFrame{
 
     //different lists for different kinds of users
     private Map<String, User> userList;
-    private Map<String, Admin> adminList;
-    private Map<String, Student> studList;
-    private Map<String, Assistant> assiList;
+//    private Map<String, Admin> adminList;
+//    private Map<String, Student> studList;
+//    private Map<String, Assistant> assiList;
 
     private Pattern eMail = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
 
@@ -60,9 +60,9 @@ public class Register extends JFrame{
                 Matcher mat = eMail.matcher(mail);
                 if (mat.matches()) {
                     //check username exists?
-                    if (!adminList.containsKey(userName) && !assiList.containsKey(userName) && !studList.containsKey(userName)) {
+                    if (!userList.containsKey(userName)) {
                         //check email exists?
-                        if (!adminList.containsValue(mail) && !assiList.containsValue(mail) && !studList.containsValue(mail)) {
+                        if (!userList.containsValue(mail)) {
                             //password not empty (can be changed to pw not save etc.)
                             if (pw != "") {
                                         User user = new User(userName, mail, pw, role);

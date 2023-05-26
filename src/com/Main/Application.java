@@ -1,10 +1,11 @@
 package com.Main;
 
-import com.Classes.Admin;
+import com.Classes.Course;
 import com.GUI.*;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Application {
@@ -25,6 +26,16 @@ public class Application {
 //
 
         Lists lists = new Lists();
+
+        Map<String, com.Classes.Room> roomlist = Lists.getRoomList();
+        System.out.println(roomlist);
+        List<Course> clist = Lists.getCourseList();
+        System.out.println(clist);
+        for (Course c : clist) {
+            System.out.println(c);
+        }
+        System.out.println(Lists.getCourseListBox());
+
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {

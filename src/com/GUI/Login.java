@@ -1,8 +1,5 @@
 package com.GUI;
 
-import com.Classes.Admin;
-import com.Classes.Assistant;
-import com.Classes.Student;
 import com.Classes.User;
 
 import com.Main.Lists;
@@ -11,7 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
@@ -24,9 +20,9 @@ public class Login extends JFrame{
 
     //different lists for different kinds of users
     private Map<String, User> userList;
-    private Map<String, Admin> adminList;
-    private Map<String, Student> studList;
-    private Map<String, Assistant> assiList;
+//    private Map<String, Admin> adminList;
+//    private Map<String, Student> studList;
+//    private Map<String, Assistant> assiList;
 
     public Login() {
         initialize();
@@ -64,8 +60,7 @@ public class Login extends JFrame{
                         String role = userList.get(userName).getRole();
 
                         if (role.equals("Admin")) {
-                        System.out.println(user.getUserName() + " " + user.geteMail() + " " + user.getPassword());
-
+                            System.out.println(user.getUserName() + " " + user.geteMail() + " " + user.getPassword());
                             EventQueue.invokeLater(new Runnable() {
                                 @Override
                                 public void run() {
@@ -82,35 +77,48 @@ public class Login extends JFrame{
                             });
 
                         } else if (role.equals("Assistant")) {
-                            User assi = userList.get(userName);
                             System.out.println(user.getUserName() + " " + user.geteMail() + " " + user.getPassword());
-                            if (Objects.equals(pw, assi.getPassword())) {
-                                EventQueue.invokeLater(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        try {
-                                            MenuAssistant menu = new MenuAssistant(user);
-                                            menu.initialize();
-                                            //close Login window
-                                            setVisible(false);
-                                            dispose();
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                        }
+                            EventQueue.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        MenuAssistant menu = new MenuAssistant(user);
+                                        menu.initialize();
+                                        //close Login window
+                                        setVisible(false);
+                                        dispose();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
                                     }
-                                });
+                                }
+                            });
 
-                            } else if (studList.containsKey(userName)) {
-                                JOptionPane.showMessageDialog(null, "NOT YET AVAILABLE", "Login Warning", JOptionPane.INFORMATION_MESSAGE);
-                            }
+                        } else if (role.equals("Student")) {
+                            System.out.println(user.getUserName() + " " + user.geteMail() + " " + user.getPassword());
+                            EventQueue.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        MenuStudent menu = new MenuStudent(user);
+                                        menu.initialize();
+                                        //close Login window
+                                        setVisible(false);
+                                        dispose();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
                         }
+
                     } else {
                         JOptionPane.showMessageDialog(null, "Wrong password, try again", "Login Warning", JOptionPane.INFORMATION_MESSAGE);
                     }
-                    } else {
+                } else {
                     JOptionPane.showMessageDialog(null, "User does not exist", "Login Warning", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
+
         });
     }
 

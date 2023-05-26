@@ -1,9 +1,7 @@
 package com.Classes;
 
 import java.sql.Time;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Course {
 
@@ -13,7 +11,7 @@ public class Course {
     private String weekday;
     private  Room room;
     private User user;
-    private Map<String, Course> courseList;
+//    private List<Course> courseList;
 
 
     //constructors
@@ -27,11 +25,11 @@ public class Course {
         this.timeEnd = timeEnd;
         this.weekday = weekday;
         this.user = user;
-        this.courseList = new HashMap<String, Course>();
+//        this.courseList = new ArrayList<Course>();
         room.setEmpty();
         room.addCourseList(this);
         user.addCourseList(this);
-        this.addCourseList(this);
+//        this.addCourseList(this);
 
 
     }
@@ -55,9 +53,9 @@ public class Course {
         this.weekday = day;
     }
 
-    public void addCourseList(Course course) {
-        courseList.put(course.getCourseName(), course);
-    }
+//    public void addCourseList(Course course) {
+//        courseList.put(course.getCourseName(), course);
+//    }
 
     //getter
     public String getCourseName() {
@@ -80,7 +78,7 @@ public class Course {
         return user;
     }
 
-    public Map<String, Course> getCourseList() {
-        return courseList;
-    }
+//    public Map<String, Course> getCourseList() {
+//        return courseList;
+//    }
 }

@@ -1,6 +1,5 @@
 package com.GUI;
 
-import com.Classes.Admin;
 import com.Classes.Course;
 import com.Classes.Room;
 import com.Main.Application;
@@ -10,7 +9,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.List;
 
 import com.Main.Lists;
 import com.Classes.User;
@@ -35,7 +36,8 @@ public class MenuAdmin extends JFrame{
     private String temp;
 
     private Map<String, Room> roomList;
-    private Map<String, Course> courseList;
+    private List<Course> courseList;
+    private List<Course> courseListBox;
     private Map<String, User> userList;
 
 
@@ -46,17 +48,20 @@ public class MenuAdmin extends JFrame{
         this.roomList = Lists.getRoomList();
         this.courseList = Lists.getCourseList();
         this.userList = Lists.getUserList();
+        this.courseListBox = Lists.getCourseListBox();
 
 
         createRoomButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 temp = textFieldRoom.getText();
-                comboBoxRoom.addItem(temp);
+//                comboBoxRoom.addItem(temp);
                 System.out.println(temp);
                 //Todo: Save temp in database
                 Room room = new Room(temp);
                 Lists.addRoomList(room);
+                comboBoxRoom.removeAllItems();
+                initialize();
             }
         });
 
@@ -64,11 +69,13 @@ public class MenuAdmin extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 temp = textFieldCourse.getText();
-                comboBoxCourse.addItem(temp);
+//                comboBoxCourse.addItem(temp);
                 System.out.println(temp);
                 //Todo: Save temp in database
                 Course course = new Course(temp);
-                Lists.addCourseList(course);
+                Lists.addCourseListBox(course);
+                comboBoxCourse.removeAllItems();
+                initialize();
             }
         });
 
@@ -86,10 +93,9 @@ public class MenuAdmin extends JFrame{
 
                 //from list
                 Room room = roomList.get(roomName);
-                Course course1 = courseList.get(courseName);
                 System.out.println(room.getRoomName() + room.getCourseList());
                 System.out.println(user.getUserName() + user.getCourseList());
-                System.out.println(course1.getCourseName() + course1.getCourseList());
+//                System.out.println(course1.getCourseName() + course1.getCourseList());
 
                 if (timeStart.before(timeEnd)) {
 //                    if (room.isEmpty()) {
@@ -98,7 +104,7 @@ public class MenuAdmin extends JFrame{
                         Map<String, Course> roomCourseList = room.getCourseList();
                         boolean hasTime = true;
                         for (Course course : roomCourseList.values()) {
-                            if (isTimeWithinRange(course.getTimeStart(), course.getTimeEnd(), timeStart, timeEnd)) {
+                            if (isTimeWithinRange(course.getTimeStart(), course.getTimeEnd(), timeStart, timeEnd) && course.getWeekday().equals(day)) {
                                 hasTime = false;
                                 break;
                             }
@@ -108,27 +114,29 @@ public class MenuAdmin extends JFrame{
                             Map<String, Course> userCourseList = user.getCourseList();
                             boolean hasTime2 = true;
                             for (Course course : userCourseList.values()) {
-                                if (isTimeWithinRange(course.getTimeStart(), course.getTimeEnd(), timeStart, timeEnd)) {
+                                if (isTimeWithinRange(course.getTimeStart(), course.getTimeEnd(), timeStart, timeEnd) && course.getWeekday().equals(day) ) {
                                     hasTime2 = false;
                                     break;
                                 }
                             }
                             if (hasTime2) {
-                                    Map<String, Course> courseCourseList = course1.getCourseList();
-                                    boolean hasTime3 = true;
-                                    for (Course course : courseCourseList.values()) {
-                                        if (isTimeWithinRange(course.getTimeStart(), course.getTimeEnd(), timeStart, timeEnd)) {
-                                            hasTime3 = false;
-                                            break;
-                                        }
+                                List<Course> courseCourseList = Lists.getCoursesByName(courseName);
+                                boolean hasTime3 = true;
+                                for (Course course : courseCourseList) {
+                                    if (isTimeWithinRange(course.getTimeStart(), course.getTimeEnd(), timeStart, timeEnd) && course.getWeekday().equals(day)) {
+                                        hasTime3 = false;
+                                        break;
                                     }
-                                    if (hasTime3) {
-                                        openTimetable();
+                                }
+                                if (hasTime3) {
+                                    Course c = new Course(courseName, room, timeStart, timeEnd, day, user);
+                                    Lists.addCourseList(c);
+                                    openTimetable();
+                                    user.addCourseAttendingList(c);
 
-                                    } else {
-                                        JOptionPane.showMessageDialog(null, "There is already the same course in another room at that time", "Collision Warning", JOptionPane.INFORMATION_MESSAGE);
-
-                                    }
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "There is already the same course in another room at that time", "Collision Warning", JOptionPane.INFORMATION_MESSAGE);
+                                }
                             } else {
                                 JOptionPane.showMessageDialog(null, "There is already a course you attend at that time", "Collision Warning", JOptionPane.INFORMATION_MESSAGE);
 
@@ -188,7 +196,7 @@ public class MenuAdmin extends JFrame{
         for (Room room : roomList.values()) {
             comboBoxRoom.addItem(room.getRoomName());
         }
-        for (Course course : courseList.values()) {
+        for (Course course : courseListBox) {
             comboBoxCourse.addItem(course.getCourseName());
         }
 
@@ -251,12 +259,12 @@ public class MenuAdmin extends JFrame{
 
         }
 
-    private static void openTimetable() {
+    private void openTimetable() {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Timetable timetable = new Timetable();
+                    Timetable timetable = new Timetable(user);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

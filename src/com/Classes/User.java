@@ -1,6 +1,8 @@
 package com.Classes;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class User {
@@ -9,6 +11,7 @@ public class User {
     private String eMail;
     private String role;
     private Map<String, Course> courseList;
+    private List<Course> courseAttendingList;
 
     //Constructor
     public User(String userName, String eMail, String password, String role) {
@@ -17,6 +20,7 @@ public class User {
         this.eMail = eMail;
         this.role = role;
         this.courseList = new HashMap<String, Course>();
+        this.courseAttendingList = new ArrayList<Course>();
     }
 
     //Setter
@@ -34,6 +38,9 @@ public class User {
 
     public void addCourseList(Course course) {
         courseList.put(course.getCourseName(), course);
+    }
+    public void addCourseAttendingList(Course course) {
+        courseAttendingList.add(course);
     }
 
 
@@ -59,4 +66,7 @@ public class User {
         return courseList;
     }
 
+    public List<Course> getCourseAttendingList() {
+        return courseAttendingList;
+    }
 }

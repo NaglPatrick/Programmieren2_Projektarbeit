@@ -4,25 +4,24 @@ import com.Classes.*;
 
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Lists {
 
     private static Map<String, User> userList;
-//    private static Map<String, Admin> adminList;
-//    private static Map<String, Assistant> assiList;
-//    private static Map<String, Student> studList;
+
     private static Map<String, Room> roomList;
-    private static Map<String, Course> courseList;
+    private static List<Course> courseList;
+    private static List<Course> courseListBox;
 
     public Lists() {
         this.userList = new HashMap<String, User>();
-//        this.adminList = new HashMap<String, Admin>();
-//        this.assiList = new HashMap<String, Assistant>();
-//        this.studList = new HashMap<String, Student>();
         this.roomList = new HashMap<String, Room>();
-        this.courseList = new HashMap<String, Course>();
+        this.courseList = new ArrayList<Course>();
+        this.courseListBox = new ArrayList<Course>();
         initialize();
     }
 
@@ -31,49 +30,66 @@ public class Lists {
         userList.put(user.getUserName(), user);
     }
 
-//    public static void addAdminList(Admin admin) {
-//        adminList.put(admin.getUserName(), admin);
-//    }
-//
-//    public static void addAssiList(Assistant assi) {
-//        assiList.put(assi.getUserName(), assi);
-//    }
-//
-//    public static void addStudList(Student stud) {
-//        studList.put(stud.getUserName(), stud);
-//    }
+
 
     public static void addRoomList(Room room) {
         roomList.put(room.getRoomName(), room);
     }
     public static void addCourseList(Course course) {
-        courseList.put(course.getCourseName(), course);
+        courseList.add(course);
+        addCourseListBox(course);
     }
-
+    public static void addCourseListBox(Course course) {
+        if (courseListBox.isEmpty()) {
+            courseListBox.add(course);
+        }
+        boolean compare = true;
+        for (Course c : courseListBox) {
+            if (c.getCourseName().equals(course.getCourseName())) {
+                compare = false;
+            }
+        }
+        if (compare) {
+            courseListBox.add(course);
+        }
+    }
     //getter
 
     public static Map<String, User> getUserList() {
         return userList;
     }
 
-//    public static Map<String, Admin> getAdminList() {
-//        return adminList;
-//    }
-//
-//    public static Map<String, Assistant> getAssiList() {
-//        return assiList;
-//    }
-//
-//    public static Map<String, Student> getStudList() {
-//        return studList;
-//    }
+
 
     public static Map<String, Room> getRoomList() {
         return roomList;
     }
 
-    public static Map<String, Course> getCourseList() {
+    public static List<Course> getCourseList() {
         return courseList;
+    }
+
+    public static List<Course> getCourseListBox() {
+        return courseListBox;
+    }
+
+    //custom methods for List
+    public static List<Course> getCoursesByName(String name) {
+        List<Course> result = new ArrayList<Course>();
+        for (Course c : courseList) {
+            if (c.getCourseName() == name) {
+                result.add(c);
+            }
+        }
+        return result;
+    }
+
+    public static boolean isCourseAvailable(Course course) {
+        boolean result = false;
+            if (course.getUser() != null) {
+                result = true;
+        }
+            return result;
     }
 
     //initialize some basic inputs for lists
@@ -113,6 +129,11 @@ public class Lists {
         addCourseList(course2);
         addCourseList(course3);
         addCourseList(course4);
+//        addCourseListBox(course1);
+//        addCourseListBox(course2);
+//        addCourseListBox(course3);
+//        addCourseListBox(course4);
+
     }
 
 

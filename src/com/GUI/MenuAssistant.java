@@ -1,12 +1,10 @@
 package com.GUI;
 
-import com.Classes.Admin;
-import com.Classes.Assistant;
+import com.Classes.User;
 import com.Classes.Course;
 import com.Classes.Room;
 import com.Main.Application;
 
-import com.Classes.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Time;
 import java.util.Map;
+import java.util.List;
 
 import com.Main.Lists;
 
@@ -33,7 +32,7 @@ public class MenuAssistant extends JFrame{
     private String temp;
 
     private Map<String, Room> roomList;
-    private Map<String, Course> courseList;
+    private List<Course> courseList;
 
 
 
@@ -57,10 +56,10 @@ public class MenuAssistant extends JFrame{
 
                 //from list
                 Room room = roomList.get(roomName);
-                Course course1 = courseList.get(courseName);
+//                Course course1 = courseList.get();
                 System.out.println(room.getRoomName() + room.getCourseList());
                 System.out.println(user.getUserName() + user.getCourseList());
-                System.out.println(course1.getCourseName() + course1.getCourseList());
+//                System.out.println(course1.getCourseName() + course1.getCourseList());
 
                 if (timeStart.before(timeEnd)) {
 //                    if (room.isEmpty()) {
@@ -69,7 +68,7 @@ public class MenuAssistant extends JFrame{
                     Map<String, Course> roomCourseList = room.getCourseList();
                     boolean hasTime = true;
                     for (Course course : roomCourseList.values()) {
-                        if (isTimeWithinRange(course.getTimeStart(), course.getTimeEnd(), timeStart, timeEnd)) {
+                        if (isTimeWithinRange(course.getTimeStart(), course.getTimeEnd(), timeStart, timeEnd) && course.getWeekday().equals(day)) {
                             hasTime = false;
                             break;
                         }
@@ -79,22 +78,25 @@ public class MenuAssistant extends JFrame{
                         Map<String, Course> userCourseList = user.getCourseList();
                         boolean hasTime2 = true;
                         for (Course course : userCourseList.values()) {
-                            if (isTimeWithinRange(course.getTimeStart(), course.getTimeEnd(), timeStart, timeEnd)) {
+                            if (isTimeWithinRange(course.getTimeStart(), course.getTimeEnd(), timeStart, timeEnd) && course.getWeekday().equals(day)) {
                                 hasTime2 = false;
                                 break;
                             }
                         }
                         if (hasTime2) {
-                          Map<String, Course> courseCourseList = course1.getCourseList();
+//                          List<Course> courseCourseList = course1.getCourseList();
                                     boolean hasTime3 = true;
-                                    for (Course course : courseCourseList.values()) {
-                                        if (isTimeWithinRange(course.getTimeStart(), course.getTimeEnd(), timeStart, timeEnd)) {
+                                    for (Course course : courseList) {
+                                        if (isTimeWithinRange(course.getTimeStart(), course.getTimeEnd(), timeStart, timeEnd) && course.getWeekday().equals(day)) {
                                             hasTime3 = false;
                                             break;
                                 }
                             }
                             if (hasTime3) {
+                                Course c = new Course(courseName, room, timeStart, timeEnd, day, user);
+                                Lists.addCourseList(c);
                                 openTimetable();
+                                user.addCourseAttendingList(c);
 
                             } else {
                                 JOptionPane.showMessageDialog(null, "There is already the same course in another room at that time", "Collision Warning", JOptionPane.INFORMATION_MESSAGE);
@@ -159,7 +161,7 @@ public class MenuAssistant extends JFrame{
         for (Room room : roomList.values()) {
             comboBoxRoom.addItem(room.getRoomName());
         }
-        for (Course course : courseList.values()) {
+        for (Course course : Lists.getCourseListBox()) {
             comboBoxCourse.addItem(course.getCourseName());
         }
 
@@ -200,12 +202,12 @@ public class MenuAssistant extends JFrame{
 
 
 
-    private static void openTimetable() {
+    private void openTimetable() {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Timetable timetable = new Timetable();
+                    Timetable timetable = new Timetable(user);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
