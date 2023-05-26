@@ -10,7 +10,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Time;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.List;
 
@@ -28,6 +27,7 @@ public class MenuStudent extends JFrame{
     private JLabel userNameLabel;
     private JPanel coursePanel;
     private JButton registerButton;
+    private JButton timetableButton;
 
     //variables and such
     private User user;
@@ -96,6 +96,13 @@ public class MenuStudent extends JFrame{
                 } else {
                     JOptionPane.showMessageDialog(null, "You can not attend more than one course at the same time", "Collision Error", JOptionPane.INFORMATION_MESSAGE);
                 }
+            }
+        });
+
+        timetableButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                openTimetable();
             }
         });
         logoutButton.addActionListener(new ActionListener() {

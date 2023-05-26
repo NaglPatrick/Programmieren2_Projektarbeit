@@ -129,10 +129,11 @@ public class Lists {
         addCourseList(course2);
         addCourseList(course3);
         addCourseList(course4);
-//        addCourseListBox(course1);
-//        addCourseListBox(course2);
-//        addCourseListBox(course3);
-//        addCourseListBox(course4);
+        admin1.addCourseAttendingList(course1);
+        admin1.addCourseAttendingList(course2);
+        assi1.addCourseAttendingList(course3);
+        assi2.addCourseAttendingList(course4);
+
 
     }
 

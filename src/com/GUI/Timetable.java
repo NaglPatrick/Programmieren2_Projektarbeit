@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Timetable extends JFrame{
 
-    private JPanel topPanel;
+    private JPanel mainPanel;
     private JPanel coursePanel;
 
     private JTable table;
@@ -25,89 +25,79 @@ public class Timetable extends JFrame{
 
     JTextField textBox = new JTextField();
     User user;
+    List<Course> courseList;
 
 
     public Timetable(User user) {
         this.user = user;
+        this.courseList = user.getCourseAttendingList();
         initialize();
 
 
     }
 
     public void initialize() {
+        JFrame frame = new JFrame("Course Schedule");
+//        setVisible(true);
+//        setTitle("Timetable");
+//        setSize(300,300);
 
-        setVisible(true);
-        setTitle("Timetable");
-        setSize(300,300);
 
 
-//        topPanel = new JPanel();
-//        topPanel.setLayout(new BorderLayout());
-//        getContentPane().add(topPanel);
-//
-//        columnNames = new String[] {"Time", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
-//        dataValues = new String[][] {
-//                {"8:00"},
-//                {"8:30"},
-//                {"9:00"},
-//                {"9:30"},
-//                {"10:00"},
-//                {"10:30"},
-//                {"11:00"},
-//                {"11:30"},
-//                {"12:00"},
-//                {"12:30"},
-//                {"13:00"},
-//                {"13:30"},
-//                {"14:00"},
-//                {"14:30"},
-//                {"15:00"},
-//                {"15:30"},
-//                {"16:00"},
-//                {"16:30"},
-//                {"17:00"},
-//                {"17:30"},
-//                {"18:00"},
-//                {"18:30"},
-//                {"19:00"},
-//                {"19:30"},
-//                {"20:00"},
-//                {"20:30"},
-//                {"21:00"},
-//                {"21:30"},
-//                {"22:00"},
-//                {"22:30"},
-//                {"23:00"}
-//        };
-//
-//        TableModel model = new myTableModel();
-//
-//        table = new JTable();
-//
-//        table.setRowHeight(15);
-//
-//        table.setModel(model);
-//
-//        TableColumn soprtColumn=table.getColumnModel().getColumn(1);
-//
-//        soprtColumn.setCellEditor(new DefaultCellEditor (textBox));
-//
-//        table.setCellSelectionEnabled(true);
-//
-//        scrollPane=new JScrollPane(table);
-//
-//        topPanel.add(scrollPane,BorderLayout.CENTER);
-//
-//
-//        table.addMouseListener(new java.awt.event.MouseAdapter() {
-//
-//            public void mouseClicked(java.awt.event.MouseEvent e) {
-//
-//            }
-//        });
 
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        coursePanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+
+                // Set up the weekday labels
+                String[] weekdays = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+                int labelHeight = 30;
+                int labelWidth = getWidth() / weekdays.length;
+
+                for (int i = 0; i < weekdays.length; i++) {
+                    g.drawString(weekdays[i], i * labelWidth + 5, labelHeight);
+                }
+
+                // Draw the courses
+                int rectHeight = 50;
+
+                for (Course course : courseList) {
+                    int startX = course.getDayIndex() * labelWidth +2;
+                    int startY = labelHeight + (course.getStartTimeSlotIndex() * rectHeight) + 5;
+                    int endX = startX + labelWidth -2;
+                    int endY = labelHeight + (course.getEndTimeSlotIndex() * rectHeight) + 5;
+
+                    g.setColor(Color.DARK_GRAY);
+                    g.fillRect(startX, startY, endX - startX, endY - startY);
+
+                    g.setColor(Color.WHITE);
+                    g.drawString(course.getCourseName(), startX + 5, startY + rectHeight / 2);
+
+
+                }
+            }
+
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(500, 200);
+            }
+        };
+
+
+        frame.add(coursePanel);
+        frame.pack();
+        frame.setVisible(true);
 
     }
+
+
+
+
+
+
 
     private void fillTimePanel() {
         List<Course> courseList = user.getCourseAttendingList();

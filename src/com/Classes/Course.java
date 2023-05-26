@@ -78,7 +78,27 @@ public class Course {
         return user;
     }
 
-//    public Map<String, Course> getCourseList() {
-//        return courseList;
-//    }
+
+    public int getDayIndex() {
+        String[] weekdays = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+        for (int i = 0; i < weekdays.length; i++) {
+            if (weekdays[i].equals(weekday)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
+    public int getStartTimeSlotIndex() {
+        int startTimeHour = Integer.parseInt(timeStart.toString().split(":")[0]);
+        int slotIndex = startTimeHour - 8; // Assuming the time slots start at 9:00 AM
+        return slotIndex;
+    }
+    public int getEndTimeSlotIndex() {
+        int startTimeHour = Integer.parseInt(timeStart.toString().split(":")[0]);
+        int endTimeHour = Integer.parseInt(timeEnd.toString().split(":")[0]);
+        int slotIndex = endTimeHour - 8; // Assuming the time slots start at 9:00 AM
+        return slotIndex;
+    }
 }
