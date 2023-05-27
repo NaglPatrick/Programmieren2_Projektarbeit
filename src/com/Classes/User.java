@@ -1,5 +1,12 @@
 package com.Classes;
 
+/*
+ * ISchedule
+ * Program to let Professors(com.Classes.Admin), assistants and student schedule their preferred courses
+ * Author: Nagl Patrick
+ * Last Change:  27.05.2022
+ */
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +48,9 @@ public class User {
     }
     public void addCourseAttendingList(Course course) {
         courseAttendingList.add(course);
+    }
+    public void removeCourseAttendingList(Course course) {
+        courseAttendingList.remove(course);
     }
 
 

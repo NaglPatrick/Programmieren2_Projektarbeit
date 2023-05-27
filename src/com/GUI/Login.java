@@ -1,5 +1,12 @@
 package com.GUI;
 
+/*
+ * ISchedule
+ * Program to let Professors(com.Classes.Admin), assistants and student schedule their preferred courses
+ * Author: Nagl Patrick
+ * Last Change:  27.05.2022
+ */
+
 import com.Classes.User;
 
 import com.Main.Lists;

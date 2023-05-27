@@ -1,15 +1,20 @@
 package com.GUI;
 
+/*
+ * ISchedule
+ * Program to let Professors(com.Classes.Admin), assistants and student schedule their preferred courses
+ * Author: Nagl Patrick
+ * Last Change:  27.05.2022
+ */
+
 import com.Classes.Course;
 import com.Classes.Room;
-import com.Main.Application;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Time;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.List;
 
@@ -30,6 +35,12 @@ public class MenuAdmin extends JFrame{
     private JComboBox comboBoxDay;
     private JComboBox comboBoxCourse;
     private JLabel userNameLabel;
+    private JComboBox comboBoxRoomDelete;
+    private JComboBox comboBoxSpecCourseDelete;
+    private JComboBox comboBoxCourseDelete;
+    private JButton deleteRoomButton;
+    private JButton deleteSpecCourseButton;
+    private JButton deleteCourseButton;
 
     //variables and such
     private User user;
@@ -60,8 +71,9 @@ public class MenuAdmin extends JFrame{
                 //Todo: Save temp in database
                 Room room = new Room(temp);
                 Lists.addRoomList(room);
-                comboBoxRoom.removeAllItems();
-                initialize();
+                JOptionPane.showMessageDialog(null, "You have added " + temp + " to the List.", "Notification", JOptionPane.INFORMATION_MESSAGE);
+
+                resetBoxes();
             }
         });
 
@@ -71,11 +83,12 @@ public class MenuAdmin extends JFrame{
                 temp = textFieldCourse.getText();
 //                comboBoxCourse.addItem(temp);
                 System.out.println(temp);
-                //Todo: Save temp in database
+
                 Course course = new Course(temp);
                 Lists.addCourseListBox(course);
-                comboBoxCourse.removeAllItems();
-                initialize();
+                JOptionPane.showMessageDialog(null, "You have added " + temp + " to the List.", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                resetBoxes();
+
             }
         });
 
@@ -131,8 +144,11 @@ public class MenuAdmin extends JFrame{
                                 if (hasTime3) {
                                     Course c = new Course(courseName, room, timeStart, timeEnd, day, user);
                                     Lists.addCourseList(c);
-                                    openTimetable();
                                     user.addCourseAttendingList(c);
+                                    resetBoxes();
+                                    JOptionPane.showMessageDialog(null, "You have successfully created this course.", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                                    openTimetable();
+
 
                                 } else {
                                     JOptionPane.showMessageDialog(null, "There is already the same course in another room at that time", "Collision Warning", JOptionPane.INFORMATION_MESSAGE);
@@ -179,6 +195,47 @@ public class MenuAdmin extends JFrame{
         });
 
 
+        //DELETE Buttons
+        deleteRoomButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String roomName = comboBoxRoomDelete.getSelectedItem().toString();
+                Room room = roomList.get(roomName);
+                if (room.getCourseList().isEmpty()) {
+                    Lists.removeRoomFromList(room);
+                    JOptionPane.showMessageDialog(null, "You have deleted " + roomName + " from the List.", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                   System.out.println(Lists.getRoomList());
+                    resetBoxes();
+                } else {
+                    System.out.println(room.getCourseList());
+                    JOptionPane.showMessageDialog(null, "You cannot remove a room with courses in it.", "Collision Error", JOptionPane.INFORMATION_MESSAGE);
+
+                }
+
+            }
+        });
+
+        deleteCourseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String courseName = comboBoxCourseDelete.getSelectedItem().toString();
+                Lists.removeCourseFromList(courseName);
+                resetBoxes();
+            }
+        });
+
+        deleteSpecCourseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String course = comboBoxSpecCourseDelete.getSelectedItem().toString();
+                String name = course.split("/")[0];
+                String time = course.split("/")[1];
+                Lists.removeSpecificCourseFromList(name, time);
+                resetBoxes();
+
+            }
+        });
+
     }
 
 
@@ -195,9 +252,16 @@ public class MenuAdmin extends JFrame{
         //fill comboBoxes
         for (Room room : roomList.values()) {
             comboBoxRoom.addItem(room.getRoomName());
+            comboBoxRoomDelete.addItem(room.getRoomName());
+
         }
         for (Course course : courseListBox) {
             comboBoxCourse.addItem(course.getCourseName());
+            comboBoxCourseDelete.addItem(course.getCourseName());
+        }
+        for (Course course : courseList) {
+            comboBoxSpecCourseDelete.addItem(course.getCourseName() + "/" + course.getTimeStart() + "/" + course.getTimeEnd() + "/" + course.getWeekday());
+
         }
 
     }
@@ -210,10 +274,13 @@ public class MenuAdmin extends JFrame{
         //Rooms
         String[] rooms = {};
         comboBoxRoom = new JComboBox<String>(rooms);
-//        comboBoxRoom.setSelectedIndex(0);
+        comboBoxRoomDelete = new JComboBox<String>(rooms);
+
         //Courses
         String[] courses = {};
         comboBoxCourse = new JComboBox<String>(courses);
+        comboBoxCourseDelete = new JComboBox<String>(courses);
+        comboBoxSpecCourseDelete = new JComboBox<String>(courses);
 
         //Time
         String[] timeStart = {"8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30"};
@@ -228,6 +295,7 @@ public class MenuAdmin extends JFrame{
         comboBoxDay = new JComboBox<String>(weekday);
         comboBoxDay.setSelectedIndex(0);
     }
+
     // Helper method to check if a given time range falls within the given start and end times
     private static boolean isTimeWithinRange(Time start, Time end, Time rangeStart, Time rangeEnd) {
         return (start.compareTo(rangeStart) >= 0 && end.compareTo(rangeStart) <= 0) ||
@@ -270,5 +338,14 @@ public class MenuAdmin extends JFrame{
                 }
             }
         });
+    }
+    private void resetBoxes() {
+        //clear the comboboxes to avoid duplicates
+        comboBoxCourse.removeAllItems();
+        comboBoxCourseDelete.removeAllItems();
+        comboBoxSpecCourseDelete.removeAllItems();
+        comboBoxRoom.removeAllItems();
+        comboBoxRoomDelete.removeAllItems();
+        initialize();
     }
 }

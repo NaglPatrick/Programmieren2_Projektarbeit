@@ -1,5 +1,12 @@
 package com.GUI;
 
+/*
+ * ISchedule
+ * Program to let Professors(com.Classes.Admin), assistants and student schedule their preferred courses
+ * Author: Nagl Patrick
+ * Last Change:  27.05.2022
+ */
+
 import com.Classes.Course;
 import com.Classes.User;
 
@@ -40,7 +47,7 @@ public class Timetable extends JFrame{
         JFrame frame = new JFrame("Course Schedule");
 //        setVisible(true);
 //        setTitle("Timetable");
-//        setSize(300,300);
+//
 
 
 
@@ -62,7 +69,7 @@ public class Timetable extends JFrame{
                 }
 
                 // Draw the courses
-                int rectHeight = 50;
+                int rectHeight = 25;
 
                 for (Course course : courseList) {
                     int startX = course.getDayIndex() * labelWidth +2;
@@ -74,7 +81,8 @@ public class Timetable extends JFrame{
                     g.fillRect(startX, startY, endX - startX, endY - startY);
 
                     g.setColor(Color.WHITE);
-                    g.drawString(course.getCourseName(), startX + 5, startY + rectHeight / 2);
+                    g.drawString("Course: " + course.getCourseName(), startX + 5, startY + rectHeight / 2);
+                    g.drawString("Room: " + course.getRoomName(), startX + 5, startY + rectHeight / 2 + g.getFontMetrics().getHeight());
 
 
                 }
@@ -82,7 +90,7 @@ public class Timetable extends JFrame{
 
             @Override
             public Dimension getPreferredSize() {
-                return new Dimension(500, 200);
+                return new Dimension(550, 800);
             }
         };
 
@@ -91,45 +99,25 @@ public class Timetable extends JFrame{
         frame.pack();
         frame.setVisible(true);
 
-    }
-
-
-
-
-
-
-
-    private void fillTimePanel() {
-        List<Course> courseList = user.getCourseAttendingList();
 
     }
+
+
+
+
+
+
+
+
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
         coursePanel = new JPanel();
     }
 
-    public class myTableModel extends DefaultTableModel
 
-    {
 
-        myTableModel()
 
-        {
-
-            super(dataValues,columnNames);
-
-        }
-
-        public boolean isCellEditable(int row,int cols)
-
-        {
-
-            return false;
-
-        }
-
-    }
 
 
 

@@ -1,5 +1,12 @@
 package com.Classes;
 
+/*
+ * ISchedule
+ * Program to let Professors(com.Classes.Admin), assistants and student schedule their preferred courses
+ * Author: Nagl Patrick
+ * Last Change:  27.05.2022
+ */
+
 import java.sql.Time;
 import java.util.*;
 
@@ -77,6 +84,9 @@ public class Course {
     public User getUser() {
         return user;
     }
+    public String getRoomName() {
+        return room.getRoomName();
+    }
 
 
     public int getDayIndex() {
@@ -92,13 +102,16 @@ public class Course {
 
     public int getStartTimeSlotIndex() {
         int startTimeHour = Integer.parseInt(timeStart.toString().split(":")[0]);
-        int slotIndex = startTimeHour - 8; // Assuming the time slots start at 9:00 AM
+        int startTimeMinutes = Integer.parseInt((timeStart.toString().split(":")[1]));
+        int slotIndex = (startTimeHour - 8) * 2 + startTimeMinutes/30 ; // Assuming the time slots start at 8:00 AM and an interval of only 30 minutes
         return slotIndex;
     }
     public int getEndTimeSlotIndex() {
-        int startTimeHour = Integer.parseInt(timeStart.toString().split(":")[0]);
+//        int startTimeHour = Integer.parseInt(timeStart.toString().split(":")[0]);
+//        int startTimeMinutes = Integer.parseInt((timeStart.toString().split(":")[1]));
         int endTimeHour = Integer.parseInt(timeEnd.toString().split(":")[0]);
-        int slotIndex = endTimeHour - 8; // Assuming the time slots start at 9:00 AM
+        int endTimeMinutes = Integer.parseInt((timeEnd.toString().split(":")[1]));
+        int slotIndex = (endTimeHour - 8) * 2 + endTimeMinutes/30; // Assuming the time slots start at 8:00 AM and an interval of only 30 minutes
         return slotIndex;
     }
 }

@@ -1,5 +1,12 @@
 package com.Main;
 
+/*
+ * ISchedule
+ * Program to let Professors(com.Classes.Admin), assistants and student schedule their preferred courses
+ * Author: Nagl Patrick
+ * Last Change:  27.05.2022
+ */
+
 import com.Classes.*;
 
 
@@ -90,6 +97,31 @@ public class Lists {
                 result = true;
         }
             return result;
+    }
+
+    //delete methods
+    public static void removeRoomFromList (Room room) {
+        roomList.remove(room.getRoomName(), room);
+    }
+    public static void removeCourseFromList (String name) {
+        for (int i = courseList.size() -1; i >= 0 ; i--) {
+            if (courseList.get(i).getCourseName().equals(name)) {
+                courseList.remove(i);
+            }
+        }
+        for (int i = 0; i < courseListBox.size(); i++) {
+            if (courseListBox.get(i).getCourseName().equals(name)) {
+                courseListBox.remove(i);
+            }
+        }
+
+    }
+    public static void removeSpecificCourseFromList (String name, String time) {
+        for (int i = courseList.size() -1; i >= 0 ; i--) {
+            if (courseList.get(i).getCourseName().equals(name) && courseList.get(i).getTimeStart().toString().equals(time)) {
+                courseList.remove(i);
+            }
+        }
     }
 
     //initialize some basic inputs for lists

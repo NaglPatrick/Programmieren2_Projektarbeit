@@ -1,9 +1,15 @@
 package com.GUI;
 
+/*
+ * ISchedule
+ * Program to let Professors(com.Classes.Admin), assistants and student schedule their preferred courses
+ * Author: Nagl Patrick
+ * Last Change:  27.05.2022
+ */
+
 import com.Classes.User;
 import com.Classes.Course;
 import com.Classes.Room;
-import com.Main.Application;
 
 
 import javax.swing.*;
@@ -26,6 +32,8 @@ public class MenuAssistant extends JFrame{
     private JComboBox comboBoxDay;
     private JComboBox comboBoxCourse;
     private JLabel userNameLabel;
+    private JComboBox comboBoxDeleteSpecCourse;
+    private JButton deleteButton;
 
     //variables and such
     private User user;
@@ -95,8 +103,10 @@ public class MenuAssistant extends JFrame{
                             if (hasTime3) {
                                 Course c = new Course(courseName, room, timeStart, timeEnd, day, user);
                                 Lists.addCourseList(c);
-                                openTimetable();
                                 user.addCourseAttendingList(c);
+                                resetBoxes();
+                                JOptionPane.showMessageDialog(null, "You have successfully created this course.", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                                openTimetable();
 
                             } else {
                                 JOptionPane.showMessageDialog(null, "There is already the same course in another room at that time", "Collision Warning", JOptionPane.INFORMATION_MESSAGE);
@@ -142,6 +152,17 @@ public class MenuAssistant extends JFrame{
 
             }
         });
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String course = comboBoxDeleteSpecCourse.getSelectedItem().toString();
+                String name = course.split("/")[0];
+                String time = course.split("/")[1];
+                Lists.removeSpecificCourseFromList(name, time);
+                resetBoxes();
+
+            }
+        });
 
 
     }
@@ -164,6 +185,11 @@ public class MenuAssistant extends JFrame{
         for (Course course : Lists.getCourseListBox()) {
             comboBoxCourse.addItem(course.getCourseName());
         }
+        for (Course course : courseList) {
+            if (course.getUser().equals(user))
+            comboBoxDeleteSpecCourse.addItem(course.getCourseName() + "/" + course.getTimeStart() + "/" + course.getTimeEnd() + "/" + course.getWeekday());
+
+        }
 
     }
 
@@ -179,6 +205,8 @@ public class MenuAssistant extends JFrame{
         //Courses
         String[] courses = {};
         comboBoxCourse = new JComboBox<String>(courses);
+
+        comboBoxDeleteSpecCourse = new JComboBox<String>(courses);
 
         //Time
         String[] timeStart = {"8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30"};
@@ -213,5 +241,15 @@ public class MenuAssistant extends JFrame{
                 }
             }
         });
+    }
+
+    private void resetBoxes() {
+        //clear the comboboxes to avoid duplicates
+        comboBoxCourse.removeAllItems();
+
+        comboBoxDeleteSpecCourse.removeAllItems();
+        comboBoxRoom.removeAllItems();
+
+        initialize();
     }
 }
