@@ -34,6 +34,7 @@ public class MenuAssistant extends JFrame{
     private JLabel userNameLabel;
     private JComboBox comboBoxDeleteSpecCourse;
     private JButton deleteButton;
+    private JButton timetableButton;
 
     //variables and such
     private User user;
@@ -152,13 +153,20 @@ public class MenuAssistant extends JFrame{
 
             }
         });
+        timetableButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                openTimetable();
+            }
+        });
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String course = comboBoxDeleteSpecCourse.getSelectedItem().toString();
                 String name = course.split("/")[0];
                 String time = course.split("/")[1];
-                Lists.removeSpecificCourseFromList(name, time);
+                String day = course.split("/")[3];
+                Lists.removeSpecificCourseFromList(name, time, day);
                 resetBoxes();
 
             }
@@ -172,7 +180,7 @@ public class MenuAssistant extends JFrame{
     public void initialize() {
         setContentPane(mainPanel);
         setTitle("Main Menu");
-        setSize(600, 500);
+        setSize(600, 600);
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 

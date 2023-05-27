@@ -63,7 +63,7 @@ public class MenuStudent extends JFrame{
                 //from list
                 List<Course> courses= Lists.getCoursesByName(courseName);
 
-                coursePanel.setLayout(new BoxLayout(coursePanel, BoxLayout.Y_AXIS));
+
                 Component[] components = coursePanel.getComponents();
                 for (Component component : components) {
                     // Remove the JLabel from the panel
@@ -106,7 +106,6 @@ public class MenuStudent extends JFrame{
                         courseAttendingList.add(c);
                         user.addCourseAttendingList(c);
                     }
-                    attendingPanel.setLayout(new BoxLayout(attendingPanel, BoxLayout.Y_AXIS));
                     JLabel label = new JLabel(courseName);
                     attendingPanel.add(label);
                     attendingPanel.revalidate();
@@ -178,7 +177,7 @@ public class MenuStudent extends JFrame{
     public void initialize() {
         setContentPane(mainPanel);
         setTitle("Main Menu");
-        setSize(600, 500);
+        setSize(600, 600);
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -188,6 +187,14 @@ public class MenuStudent extends JFrame{
         for (Course course : courseListBox) {
             comboBoxCourse.addItem(course.getCourseName());
         }
+        coursePanel.setLayout(new BoxLayout(coursePanel, BoxLayout.Y_AXIS));
+        attendingPanel.setLayout(new BoxLayout(attendingPanel, BoxLayout.Y_AXIS));
+        for (Course course : courseAttendingList) {
+            JLabel label = new JLabel(course.getCourseName());
+            attendingPanel.add(label);
+            attendingPanel.revalidate();
+        }
+
 
     }
 

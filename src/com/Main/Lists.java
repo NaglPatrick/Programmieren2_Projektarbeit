@@ -116,9 +116,9 @@ public class Lists {
         }
 
     }
-    public static void removeSpecificCourseFromList (String name, String time) {
+    public static void removeSpecificCourseFromList (String name, String time, String day) {
         for (int i = courseList.size() -1; i >= 0 ; i--) {
-            if (courseList.get(i).getCourseName().equals(name) && courseList.get(i).getTimeStart().toString().equals(time)) {
+            if (courseList.get(i).getCourseName().equals(name) && courseList.get(i).getTimeStart().toString().equals(time) && courseList.get(i).getWeekday().equals(day)) {
                 courseList.remove(i);
             }
         }
